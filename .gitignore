@@ -17,3 +17,4 @@ TAGS
 /locale/model_attributes.rb
 /files/
 public/download
+script/update-translation
