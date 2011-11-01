@@ -208,7 +208,7 @@ class GeneralController < ApplicationController
             @total_hits += @xapian_requests.matches_estimated
         end
         if @bodies
-            @xapian_bodies = perform_search([PublicBody], @query, @sortby, nil, 5)
+            @xapian_bodies = perform_search([PublicBody], @query, @sortby, nil, 25) #increasing search results for bodies
             @bodies_per_page = @per_page
             @this_page_hits += @xapian_bodies.results.size
             @xapian_bodies_hits = @xapian_bodies.results.size
