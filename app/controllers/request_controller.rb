@@ -148,7 +148,7 @@ class RequestController < ApplicationController
     end
 
     def list
-        medium_cache
+        #medium_cache
         @view = params[:view]
         params[:latest_status] = @view
         query = make_query_from_params

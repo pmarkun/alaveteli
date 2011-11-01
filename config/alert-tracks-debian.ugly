@@ -12,12 +12,12 @@
 #
 # !!(*= $daemon_name *)!! Start the Alaveteli email alert daemon
 
-NAME=!!(*= $daemon_name *)!!
-DAEMON=/data/vhost/!!(*= $vhost *)!!/alaveteli/script/runner
+NAME="Email"
+DAEMON=/var/www/queremossaber.org.br/script/runner
 DAEMON_ARGS="--daemon TrackMailer.alert_tracks_loop"
-PIDFILE=/data/vhost/!!(*= $vhost *)!!/alert-tracks.pid
-LOGFILE=/data/vhost/!!(*= $vhost *)!!/logs/alert-tracks.log
-DUSER=!!(*= $user *)!!
+PIDFILE=/var/www/queremossaber.org.br/alert-tracks.pid
+LOGFILE=/var/www/queremossaber.org.br/logs/alert-tracks.log
+DUSER=alaveteli
 
 trap "" 1
 

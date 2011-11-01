@@ -242,7 +242,7 @@ public
             # without GQ in the subject, you just get an auto response
             self.law_used_full + ' request GQ - ' + self.title
         else
-            self.law_used_full + ' request - ' + self.title
+            "Pedido de Informa√√o" + " - " + self.title
         end
     end
     def email_subject_followup(incoming_message = nil)
@@ -260,7 +260,7 @@ public
     # Two sorts of laws for requests, FOI or EIR 
     def law_used_full
         if self.law_used == 'foi'
-            return "Freedom of Information"
+            return "acesso a informa√ß√£o"
         elsif self.law_used == 'eir'
             return "Environmental Information Regulations"
         else
