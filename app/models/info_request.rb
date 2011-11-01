@@ -242,7 +242,7 @@ public
             # without GQ in the subject, you just get an auto response
             self.law_used_full + ' request GQ - ' + self.title
         else
-            "Pedido d - " + self.title
+            "Pedido de Informação - " + self.title
         end
     end
     def email_subject_followup(incoming_message = nil)
