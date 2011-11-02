@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: alaveteli\n"
 "Report-Msgid-Bugs-To: http://github.com/sebbacon/alaveteli/issues\n"
 "POT-Creation-Date: 2011-10-09 01:10+0200\n"
-"PO-Revision-Date: 2011-11-01 22:20+0000\n"
+"PO-Revision-Date: 2011-11-02 15:08+0000\n"
 "Last-Translator: markun <pedro@esfera.mobi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Enviar seu comentário"
 
 #: app/controllers/comment_controller.rb:56
 msgid "Then your annotation to {{info_request_title}} will be posted."
-msgstr ""
+msgstr "Então seu comentário sobre {{info_request_title}} será publicado."
 
 #: app/controllers/comment_controller.rb:57
 msgid "Confirm your annotation to {{info_request_title}}"
@@ -143,12 +143,11 @@ msgid ""
 "            <p>If you write about this request (for example in a forum or a blog) please link to this page, and add an \n"
 "            annotation below telling people about your writing.</p>"
 msgstr ""
-"<p> O seu {{law_used_full}} pedido foi <strong>enviado ao órgão "
-"responsável!</strong> </p><p> <strong>Vamos lhe enviar e-mail "
-"quando</strong> houver uma resposta, ou depois de {{late_number_of_days}}, "
-"se não houver nenhuma resposta. </p><p> Se você escrever sobre este pedido "
-"(por exemplo, em um fórum ou um blog), por favor faça um link para esta "
-"página. </p>"
+"<p> O seu pedido foi <strong>enviado ao órgão responsável!</strong> </p><p> "
+"<strong>Vamos lhe enviar e-mail quando</strong> houver uma resposta, ou "
+"depois de {{late_number_of_days}} dias, se não houver nenhuma resposta. "
+"</p><p> Se você escrever em algum lugar sobre este pedido (por exemplo, em "
+"um fórum ou um blog), por favor faça um link para esta página. </p>"
 
 #: app/controllers/request_controller.rb:343
 msgid "To classify the response to this FOI request"
@@ -233,6 +232,9 @@ msgid ""
 "href=\"{{donation_url}}\">make a donation</a> to the charity which runs "
 "it.</p>"
 msgstr ""
+"<p>Nós estamos felizes que você conseguiu toda a informação que procurava. "
+"Se você for escrever sobre ou fazer uso dessa informação, por favor volte "
+"depois e deixe um comentário contando o que você fez."
 
 #: app/controllers/request_controller.rb:426
 msgid ""
@@ -241,12 +243,14 @@ msgid ""
 "the charity which runs it.</p><p>If you want to try and get the rest of the "
 "information, here's what to do now.</p>"
 msgstr ""
+"<p>Nós estamos felizes que você conseguiu parte da informação que procurava.<p>\n"
+"<p>Se você quer tentar conseguir o resto da informação. Veja o que você pode fazer.</p>"
 
 #: app/controllers/request_controller.rb:429
 msgid ""
 "Please write your follow up message containing the necessary clarifications "
 "below."
-msgstr ""
+msgstr "Por favor escreva sua mensagem contendo as explicações necessárias."
 
 #: app/controllers/request_controller.rb:434
 msgid ""
@@ -261,6 +265,9 @@ msgid ""
 "the error was a delivery failure, and you can find an up to date FOI email "
 "address for the authority, please tell us using the form below.</p>"
 msgstr ""
+"<p>Obrigado! Nós vamos olhar o que aconteceu e tentar consertar.</p><p>Se "
+"foi um erro de envio e você puder achar um email atualizado desse orgão, por"
+" favor nos avise no formulário abaixo.</p>"
 
 #: app/controllers/request_controller.rb:440
 msgid "Please use the form below to tell us more."
@@ -272,10 +279,13 @@ msgid ""
 "authority that you have withdrawn your request. Otherwise they will not know"
 " it has been withdrawn."
 msgstr ""
+"Se você ainda não fez, por favor escreva uma mensagem explicando para o "
+"orgão que você esta removendo seu pedido. Do contrario eles não vão saber "
+"que o pedido foi removido."
 
 #: app/controllers/request_controller.rb:548
 msgid "To send a follow up message to "
-msgstr ""
+msgstr "Enviar uma mensagem de acompanhamento para "
 
 #: app/controllers/request_controller.rb:549
 msgid "To reply to "
@@ -291,7 +301,7 @@ msgstr ""
 
 #: app/controllers/request_controller.rb:554
 msgid "Write your FOI follow up message to "
-msgstr ""
+msgstr "Escreva sua mensagem de acompanhamento do pedido para "
 
 #: app/controllers/request_controller.rb:555
 msgid "Write a reply to "
@@ -303,6 +313,9 @@ msgid ""
 "prevent spam. Please <a href=\"%s\">contact us</a> if you really want to "
 "send a follow up message."
 msgstr ""
+"Sua mensagem não foi enviada por que esse pedido foi interrompido para "
+"impedir spam. Por favor <a href=\"%s\">entre em contato</a> se você "
+"realmente quer enviar essa mensagem."
 
 #: app/controllers/request_controller.rb:565
 msgid ""
@@ -311,11 +324,11 @@ msgstr ""
 
 #: app/controllers/request_controller.rb:588
 msgid "Your internal review request has been sent on its way."
-msgstr ""
+msgstr "Seu pedido de revisão foi enviado."
 
 #: app/controllers/request_controller.rb:590
 msgid "Your follow up message has been sent on its way."
-msgstr ""
+msgstr "Sua mensagem foi encaminhada."
 
 #: app/controllers/request_controller.rb:712
 msgid ""
@@ -703,7 +716,7 @@ msgstr ""
 
 #: app/models/info_request.rb:805
 msgid "Awaiting internal review."
-msgstr ""
+msgstr "Aguardando revisão."
 
 #: app/models/info_request.rb:807
 msgid "Delivery error"
@@ -711,11 +724,11 @@ msgstr "Erro de entrega"
 
 #: app/models/info_request.rb:809
 msgid "Unusual response."
-msgstr ""
+msgstr "Outra resposta."
 
 #: app/models/info_request.rb:811
 msgid "Withdrawn by the requester."
-msgstr ""
+msgstr "Removida pelo solicitante."
 
 #: app/models/info_request.rb:816 app/models/info_request_event.rb:318
 msgid "unknown status "
@@ -727,7 +740,7 @@ msgstr "Resposta"
 
 #: app/models/info_request_event.rb:313
 msgid "Internal review request"
-msgstr ""
+msgstr "Pedido de revisão"
 
 #: app/models/info_request_event.rb:316
 msgid "Clarification"
@@ -751,7 +764,7 @@ msgstr "Grato(a),"
 
 #: app/models/outgoing_message.rb:70
 msgid "Yours faithfully,"
-msgstr ""
+msgstr "Atenciosamente,"
 
 #: app/models/outgoing_message.rb:74
 msgid "GIVE DETAILS ABOUT YOUR COMPLAINT HERE"
@@ -1166,7 +1179,7 @@ msgstr ""
 
 #: app/views/comment/_single_comment.rhtml:10
 msgid "left an annotation"
-msgstr ""
+msgstr "deixou um comentário"
 
 #: app/views/comment/_single_comment.rhtml:24
 msgid "Report abuse"
@@ -1284,6 +1297,8 @@ msgid ""
 "Annotations will be posted publicly here, and are \n"
 "        <strong>not</strong> sent to {{public_body_name}}."
 msgstr ""
+"Comentários vão ser apenas publicados aqui, e não serão enviadas para o "
+"{{public_body_name}}."
 
 #: app/views/comment/preview.rhtml:1
 msgid "Preview new annotation on '{{info_request_title}}'"
@@ -1291,13 +1306,13 @@ msgstr ""
 
 #: app/views/comment/preview.rhtml:5
 msgid "Now preview your annotation"
-msgstr ""
+msgstr "Visualize o seu comentário"
 
 #: app/views/comment/preview.rhtml:10
 msgid ""
 "Your name and annotation will appear in <strong>search engines</strong>."
 msgstr ""
-"Seu nome e anotações apareceram em <strong>mecanismos de busca</strong>."
+"Seu nome e anotações aparecerão em <strong>mecanismos de busca</strong>."
 
 #: app/views/comment/preview.rhtml:20
 msgid "Re-edit this annotation"
@@ -1496,7 +1511,7 @@ msgstr "Esperando para a autoridade pública completar uma revisão interna"
 
 #: app/views/general/_advanced_search_tips.rhtml:34
 msgid "Received an error message, such as delivery failure."
-msgstr ""
+msgstr "Recebi uma mensagem de erro, como 'erro de envio'."
 
 #: app/views/general/_advanced_search_tips.rhtml:35
 msgid "A strange reponse, required attention by the {{site_name}} team"
@@ -2187,7 +2202,7 @@ msgstr ""
 
 #: app/views/public_body/view_email.rhtml:17
 msgid "We do not have a working request email address for this authority."
-msgstr ""
+msgstr "Nós não temos um email válido desse orgão."
 
 #: app/views/public_body/view_email.rhtml:28
 msgid ""
@@ -2292,7 +2307,7 @@ msgstr "Qual a melhor situação do seu pedido agora?"
 #: app/views/request/_describe_state.rhtml:7
 #: app/views/request/_other_describe_state.rhtml:10
 msgid "This request is still in progress:"
-msgstr ""
+msgstr "Esse pedido ainda não acabou:"
 
 #: app/views/request/_describe_state.rhtml:11
 msgid ""
@@ -2319,12 +2334,12 @@ msgstr ""
 
 #: app/views/request/_describe_state.rhtml:38
 msgid "They are going to reply <strong>by post</strong>"
-msgstr ""
+msgstr "Eles vão responder através de um <strong>post</strong>"
 
 #: app/views/request/_describe_state.rhtml:44
 #: app/views/request/_other_describe_state.rhtml:40
 msgid "This particular request is finished:"
-msgstr ""
+msgstr "Esse pedido foi finalizado:"
 
 #: app/views/request/_describe_state.rhtml:47
 #: app/views/request/_other_describe_state.rhtml:43
@@ -2335,7 +2350,7 @@ msgstr ""
 msgid ""
 "They do <strong>not have</strong> the information <small>(maybe they say who"
 " does)</small>"
-msgstr ""
+msgstr "Eles não tem a informação (mas podem ter dito quem tem)"
 
 #: app/views/request/_describe_state.rhtml:56
 msgid "I've received <strong>some of the information</strong>"
@@ -2359,7 +2374,7 @@ msgstr "Recebi uma <strong>mensagem de erro</strong>"
 
 #: app/views/request/_describe_state.rhtml:84
 msgid "This request <strong>requires administrator attention</strong>"
-msgstr ""
+msgstr "Esse pedido <strong>precisa de atenção dos administradores</strong>"
 
 #: app/views/request/_describe_state.rhtml:91
 msgid "I would like to <strong>withdraw this request</strong>"
@@ -2371,7 +2386,7 @@ msgstr "Enviar situação"
 
 #: app/views/request/_describe_state.rhtml:101
 msgid "and we'll suggest <strong>what to do next</strong>"
-msgstr ""
+msgstr "e nós vamos sugerir <strong>o que fazer</strong>"
 
 #: app/views/request/_describe_state.rhtml:107
 msgid ""
@@ -2383,16 +2398,16 @@ msgstr ""
 
 #: app/views/request/_followup.rhtml:3
 msgid "the main FOI contact at {{public_body}}"
-msgstr "o principal contato para acesso à informação no(a) {{}} public_body"
+msgstr "o principal contato para acesso à informação no(a) {{public_body}}"
 
 #: app/views/request/_followup.rhtml:8
 msgid "Request an internal review from {{person_or_body}}"
-msgstr "Enviar um recurso para {{}} person_or_body"
+msgstr "Enviar um recurso para {{person_or_body}}"
 
 #: app/views/request/_followup.rhtml:11
 msgid "Send a public follow up message to {{person_or_body}}"
 msgstr ""
-"Enviar uma mensagem de acompanhamento de seu pedido para {{}} person_or_body"
+"Enviar uma mensagem de acompanhamento de seu pedido para {{person_or_body}}"
 
 #: app/views/request/_followup.rhtml:14
 msgid "Send a public reply to {{person_or_body}}"
@@ -2403,13 +2418,13 @@ msgid ""
 "Don't want to address your message to {{person_or_body}}?  You can also "
 "write to:"
 msgstr ""
-"Você não quer enviar sua mensagem para {{}} person_or_body? Você também pode"
-" escrever para:"
+"Você não quer enviar sua mensagem para {{person_or_body}}? Você também pode "
+"escrever para:"
 
 #: app/views/request/_followup.rhtml:23 app/views/request/_followup.rhtml:28
 #: app/views/request/_followup.rhtml:34
 msgid "the main FOI contact address for {{public_body}}"
-msgstr "o endereço de contacto principal FOI para {{}} public_body"
+msgstr "o principal contato para acesso à informação no(a) {{public_body}}"
 
 #: app/views/request/_followup.rhtml:43
 msgid ""
@@ -2434,6 +2449,10 @@ msgid ""
 "not in your original request, then <a href=\"{{new_request_link}}\">file a "
 "new request</a>."
 msgstr ""
+"Por favor envie <strong>apenas</strong> mensagens diretamente relacionadas "
+"ao seu pedido {{request_link}}. Se você quiser pedir informações que não "
+"estavam no seu pedido original, por favor envie um <a "
+"href=\"{{new_request_link}}\">novo pedido</a>."
 
 #: app/views/request/_followup.rhtml:59
 msgid ""
@@ -2536,7 +2555,7 @@ msgstr ""
 
 #: app/views/request/_other_describe_state.rhtml:21
 msgid "Still awaiting an <strong>internal review</strong>"
-msgstr ""
+msgstr "Ainda aguardando o <strong>pedido de revisão</strong>"
 
 #: app/views/request/_other_describe_state.rhtml:28
 msgid "<strong>Clarification</strong> has been requested"
@@ -2729,10 +2748,11 @@ msgstr ""
 #: app/views/request/followup_bad.rhtml:2
 msgid "Unable to send follow up message to {{username}}"
 msgstr ""
+"Não foi possível mandar uma mensagem de acompanhamento para {{username}}"
 
 #: app/views/request/followup_bad.rhtml:4
 msgid "Unable to send a reply to {{username}}"
-msgstr ""
+msgstr "Não foi possível enviar uma mensagem para {{username}}"
 
 #: app/views/request/followup_bad.rhtml:11
 msgid "Freedom of Information law no longer applies to"
@@ -2770,6 +2790,9 @@ msgid ""
 "    one on their website, or by phoning them up and asking. If you manage\n"
 "    to find one, then please <a href=\"%s\">send it to us</a>."
 msgstr ""
+"Talvez você consiga achar um email no site deles ou telefonando e "
+"perguntando. Se você conseguir encontrar, por favor <a href=\"%s\">envie "
+"para nós</a>."
 
 #: app/views/request/followup_bad.rhtml:29
 msgid "unknown reason "
@@ -2795,7 +2818,7 @@ msgstr ""
 
 #: app/views/request/followup_preview.rhtml:15
 msgid "Your message will appear in <strong>search engines</strong>"
-msgstr "Suas mensagens apareceram em <strong>mecanismos de busca</strong>"
+msgstr "Suas mensagens aparecerão em <strong>mecanismos de busca</strong>"
 
 #: app/views/request/followup_preview.rhtml:22 app/views/request/new.rhtml:40
 #: app/views/request/preview.rhtml:17
@@ -2889,6 +2912,8 @@ msgid ""
 "Browse <a href='{{url}}'>other requests</a> for examples of how to word your"
 " request."
 msgstr ""
+"Veja <a href=\"{{url}}\">outros pedidos</a> para exemplos de como escrever o"
+" seu."
 
 #: app/views/request/new.rhtml:52
 msgid "Special note for this authority!"
@@ -3042,7 +3067,7 @@ msgstr "Faltam dados de contato para '"
 msgid ""
 "Unfortunately, we do not have a working {{info_request_law_used_full}}\n"
 "address for"
-msgstr ""
+msgstr "Infelizmente, nós não temos um email válido de "
 
 #: app/views/request/new_bad_contact.rhtml:6
 msgid ""
@@ -3081,6 +3106,9 @@ msgid ""
 "Your name, request and any responses will appear in <strong>search engines</strong>\n"
 "        (<a href=\"%s\">details</a>)."
 msgstr ""
+"Seu <strong>nome, pedido e quaisquer respostas vão aparecer "
+"publicamente</strong> (<a href=\"%s\">porque?</a>) neste website e em "
+"mecanismos de busca."
 
 #: app/views/request/preview.rhtml:31
 msgid ""
@@ -3131,6 +3159,8 @@ msgid ""
 "This request is hidden, so that only you the requester can see it. Please\n"
 "    <a href=\"%s\">contact us</a> if you are not sure why."
 msgstr ""
+"Esse pedido esta escondido, apenas quem pediu pode ver. Por favor <a "
+"href=\"%s\">contate-nos</a> se você não tem certeza de porque."
 
 #: app/views/request/show.rhtml:36
 msgid ""
@@ -3232,7 +3262,7 @@ msgstr "Você pode <strong>reclamar</strong> por"
 
 #: app/views/request/show.rhtml:89
 msgid "requesting an internal review"
-msgstr ""
+msgstr "pedindo uma revisão"
 
 #: app/views/request/show.rhtml:91
 msgid "<strong>did not have</strong> the information requested."
@@ -3260,7 +3290,7 @@ msgstr "Por favor"
 
 #: app/views/request/show.rhtml:102
 msgid "send a follow up message"
-msgstr ""
+msgstr "enviar uma mensagem de acompanhamento"
 
 #: app/views/request/show.rhtml:104
 msgid "The request is <strong>waiting for clarification</strong>."
@@ -3276,7 +3306,7 @@ msgstr "entrar"
 
 #: app/views/request/show.rhtml:106
 msgid "to send a follow up message."
-msgstr ""
+msgstr "enviar uma mensagem de acompanhamento."
 
 #: app/views/request/show.rhtml:109
 msgid ""
@@ -3289,12 +3319,16 @@ msgid ""
 "Waiting for an <strong>internal review</strong> by {{public_body_link}} of "
 "their handling of this request."
 msgstr ""
+"Aguardando por uma <strong>revisão</strong> por {{public_body_link}} da sua "
+"resposta a esse pedido."
 
 #: app/views/request/show.rhtml:113
 msgid ""
 "There was a <strong>delivery error</strong> or similar, which needs fixing "
 "by the {{site_name}} team."
 msgstr ""
+"Ocorreu um <strong>erro no envio</strong> ou algo parecido, que precisa ser "
+"consertado pela equipe do {{site_name}}."
 
 #: app/views/request/show.rhtml:115
 msgid ""
@@ -3309,6 +3343,8 @@ msgid ""
 "This request has been <strong>withdrawn</strong> by the person who made it. \n"
 "        \t   There may be an explanation in the correspondence below."
 msgstr ""
+"Este pedido foi <strong>removido</strong> pela pessoa que o fez. Pode ser "
+"que exista uma explicação na troca de emails abaixo."
 
 #: app/views/request/show_response.rhtml:13
 msgid "Which of these is happening?"
@@ -3583,6 +3619,8 @@ msgid ""
 "You will only get an answer to your request if you follow up\n"
 "with the clarification."
 msgstr ""
+"Você só vai receber uma resposta para o seu pedido se enviar uma mensagem "
+"com as explicações adicionais."
 
 #: app/views/request_mailer/old_unclassified_updated.rhtml:1
 msgid ""
@@ -3678,6 +3716,10 @@ msgid ""
 "Click on the link below to send a message to {{public_body_name}} telling them to reply to your request. You might like to ask for an internal\n"
 "review, asking them to find out why response to the request has been so slow."
 msgstr ""
+"Clique no link abaixo para enviar uma mensagem para {{public_body_name}} "
+"pedindo para eles responderem seu pedido. Você pode também pedir uma revisão"
+" do pedido, pedindo que eles descubram porque a resposta ao seu pedido esta "
+"demorando tanto."
 
 #: app/views/track/_tracking_links.rhtml:8
 msgid ""
@@ -4329,6 +4371,9 @@ msgid ""
 "\n"
 "Please click on the link below."
 msgstr ""
+"Você acabou de tentar se registrar no {{site_name}}, mas você já tem uma conta. Seu nome e senha continuam os mesmos.\n"
+"\n"
+"Por favor, clique no link abaixo."
 
 #: app/views/user_mailer/changeemail_already_used.rhtml:1
 msgid ""
