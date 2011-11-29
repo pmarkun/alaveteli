@@ -163,6 +163,8 @@ class PublicBodyController < ApplicationController
                 title << [ 
                     public_body.name, 
                     public_body.short_name, 
+                    public_body.email,
+                    # Including the request_email sincewe think it's important for everybody to have this info
                     # DO NOT include request_email (we don't want to make it
                     # easy to spam all authorities with requests)
                     public_body.url_name, 
