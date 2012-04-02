@@ -1,8 +1,13 @@
-These instructions are based on getting the FOI site up and running on
-Ubuntu and/or Debian.
+These instructions assume Debian Squeeze or Ubuntu 11.04, or later
+(probably, though we won't necessarily have tested in later versions
+yet!)
+[Install instructions for OS X](https://github.com/sebbacon/alaveteli/wiki/OS-X-Quickstart)
+are under development.
 
-It was last run using the Lucid Lynx version of Ubuntu and on the
-Parallels debian instance (2.6.18-4-686).
+It is possible to install on Ubuntus as old as 10.04, but you must use
+[Xapian backports](https://launchpad.net/~xapian-backports/+archive/xapian-1.2)
+(see [issue #158](https://github.com/sebbacon/alaveteli/issues/159)
+for discussion).
 
 Commands are intended to be run via the terminal or over ssh.
 
@@ -31,21 +36,31 @@ Some of the files also have a version number listed in config/packages - check
 that you have appropriate versions installed. Some also list "|" and offer
 a choice of packages.
 
+
 You will also want to install mySociety's common ruby libraries and the Rails
 code. Run:
 
-  git submodule update --init
+    git submodule update --init
 
 to fetch the contents of the submodules.
 
-Optionally, you may want to install
-[wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/downloads/list).
+If you would like users to be able to download pretty PDFs as part of 
+the downloadable zipfile of their request history, you should also install
+[wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/downloads/list).  
 We recommend downloading the latest, statically compiled version from
 the project website, as this allows running headless (i.e. without a
 graphical interface running) on Linux.  If you do install
 `wkhtmltopdf`, you need to edit a setting in the config file to point
-to it (see below).
+to it (see below).  If you don't install it, everything will still work, but 
+users will get ugly, plain text versions of their requests when they 
+download them.
 
+Version 1.44 of `pdftk` contains a bug which makes it to loop forever
+in certain edge conditions.  Until it's incorporated into an official
+release, you can either hope you don't encounter the bug (it ties up a
+rails process until you kill it) you'll need to patch it yourself or
+use the Debian package compiled by mySociety (see link in
+[issue 305](https://github.com/sebbacon/alaveteli/issues/305))
 
 # Configure Database 
 
@@ -72,8 +87,8 @@ constraints whilst running the tests they also need to be a superuser.
 
 The following command will set up a user 'foi' with password 'foi':
 
-    echo "CREATE DATABASE foi_development encoding = 'UTF8';
-    CREATE DATABASE foi_test encoding = 'UTF8';
+    echo "CREATE DATABASE foi_development encoding 'SQL_ASCII' template template0;
+    CREATE DATABASE foi_test encoding 'SQL_ASCII' template template0;
     CREATE USER foi WITH CREATEUSER;
     ALTER USER foi WITH PASSWORD 'foi';
     ALTER USER foi WITH CREATEDB;
@@ -81,6 +96,24 @@ The following command will set up a user 'foi' with password 'foi':
     GRANT ALL PRIVILEGES ON DATABASE foi_test TO foi;    	
     ALTER DATABASE foi_development OWNER TO foi;
     ALTER DATABASE foi_test OWNER TO foi;" | psql
+    
+We create using the ``SQL_ASCII`` encoding, because in postgres this
+is means "no encoding"; and because we handle and store all kinds of
+data that may not be valid UTF (for example, data originating from
+various broken email clients that's not 8-bit clean), it's safer to be
+able to store *anything*, than reject data at runtime.
+
+# Configure email
+
+You will need to set up an email server (MTA) to send and receive
+emails.  Full configuration for an MTA is beyond the scope of this
+document. However, just to get the tests to pass, you will at a
+minimum need to allow sending emails via a `sendmail` command (a
+requirement met, for example, with `sudo apt-get install exim4`).
+
+To receive email in a production setup, you will also need to
+configure your MTA to forward incoming emails to Alaveteli.  An
+example configuration is described in `INSTALL-exim4.md`.
 
 # Set up configs
 
@@ -250,6 +283,42 @@ is supplied in `../conf/varnish-alaveteli.vcl`.
 
 # Troubleshooting
 
+*   **Incoming emails aren't appearing in my Alaveteli install**
+    
+    First, you need to check that your MTA is delivering relevant
+    incoming emails to the `script/mailin` command.  There are various
+    ways of setting your MTA up to do this; we have documented one way
+    of doing it in Exim at `doc/INSTALL-exim4.conf`, including a
+    command you can use to check that the email routing is set up
+    correctly.
+    
+    Second, you need to test that the mailin script itself is working
+    correctly, by running it from the command line, First, find a
+    valid "To" address for a request in your system.  You can do this
+    through your site's admin interface, or from the command line,
+    like so:
+
+        $ ./script/console
+        Loading development environment (Rails 2.3.14)
+        >> InfoRequest.find_by_url_title("why_do_you_have_such_a_fancy_dog").incoming_email
+        => "request-101-50929748@localhost"
+            
+    Now take the source of a valid email (there are some sample emails in
+    `spec/fixtures/files/`); edit the `To:` header to match this address;
+    and then pipe it through the mailin script.  A non-zero exit code
+    means there was a problem.  For example:
+
+        $ cp spec/fixtures/files/incoming-request-plain.email /tmp/
+        $ perl -pi -e 's/^To:.*/To: <request-101-50929748@localhost>/' /tmp/incoming-request-plain.email
+        $ ./script/mailin < /tmp/incoming-request-plain.email
+        $ echo $?
+        75
+
+    The `mailin` script emails the details of any errors to
+    `CONTACT_EMAIL` (from your `general.yml` file).  A common problem is
+    for the user that the MTA runs as not to have write access to
+    `files/raw_emails/`.
+        
 *   **Various tests fail with "*Your PostgreSQL connection does not support
     unescape_bytea. Try upgrading to pg 0.9.0 or later.*"**
 
@@ -266,3 +335,34 @@ is supplied in `../conf/varnish-alaveteli.vcl`.
     Did you remember to remove the file `alaveteli/config/rails_env.rb`
     as described above?  It's created every time you run
     `script/rails-post-deploy`
+
+*   **Non-ASCII characters are being displayed as asterisks in my incoming messages**
+
+    We rely on `elinks` to convert HTML email to plain text.
+    Normally, the encoding should just work, but under some
+    circumstances it appears that `elinks` ignores the parameters
+    passed to it from Alaveteli.
+    
+    To force `elinks` always to treat input as UTF8, add the following
+    to `/etc/elinks/elinks.conf`:
+    
+        set document.codepage.assume = "utf-8"
+        set document.codepage.force_assumed = 1
+
+    You should also check that your locale is set up correctly.  See 
+    [https://github.com/sebbacon/alaveteli/issues/128#issuecomment-1814845](this issue followup)
+    for further discussion.
+    
+*   **I'm getting lots of `SourceIndex.new(hash) is deprecated` errors when running the tests**
+
+    The latest versions of rubygems contain a large number of noisy
+    deprecation warnings that you can't turn off individually.  Rails
+    2.x isn't under active development so isn't going to get fixed (in
+    the sense of using a non-deprecated API).  So the only vaguely
+    sensible way to avoid this noisy output is to downgrade rubygems.
+    
+    For example, you might do this by uninstalling your
+    system-packaged rubygems, and then installing the latest rubygems
+    from source, and finally executing `sudo gem update --system
+    1.6.2`.
+

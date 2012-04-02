@@ -30,7 +30,6 @@ MAILTO=pedro@esfera.mobi
 # Only root can restart apache
 31 1 * * * root run-with-lockfile -n /tmp/compact-xapian-database.lock "/var/www/queremossaber/script/compact-xapian-database production" || echo "stalled?"
 
-
 # Once a day on all servers
 43 2 * * * alaveteli /var/www/queremossaber/script/request-creation-graph
 48 2 * * * alaveteli /var/www/queremossaber/script/user-use-graph

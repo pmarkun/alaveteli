@@ -3,11 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe InfoRequest do 
 
     describe "guessing a request from an email" do 
-        fixtures :info_requests, :public_bodies, :incoming_messages, :raw_emails
 
         before(:each) do
             @im = incoming_messages(:useless_incoming_message)
-            load_raw_emails_data(raw_emails)
+            load_raw_emails_data
         end
 
         it 'should compute a hash' do
@@ -73,8 +72,6 @@ describe InfoRequest do
     end
     
     describe " when emailing" do
-    
-        fixtures :info_requests, :info_request_events, :outgoing_messages, :public_bodies, :public_body_translations, :users, :comments
 
         before do
             @info_request = info_requests(:fancy_dog_request)
@@ -143,8 +140,8 @@ describe InfoRequest do
         end
 
         it "should cope with indexing after item is deleted" do
+            IncomingMessage.find(:all).each{|x| x.parse_raw_email!}
             rebuild_xapian_index
-
             # delete event from underneath indexing; shouldn't cause error
             info_request_events(:useless_incoming_message_event).save!
             info_request_events(:useless_incoming_message_event).destroy
@@ -154,7 +151,6 @@ describe InfoRequest do
     end 
 
     describe "when calculating the status" do
-        fixtures :info_requests, :info_request_events, :holidays, :public_bodies, :public_body_translations, :outgoing_messages
 
         before do
             @ir = info_requests(:naughty_chicken_request)
@@ -196,8 +192,6 @@ describe InfoRequest do
 
     describe "when using a plugin and calculating the status" do
 
-        fixtures :info_requests
-
         before do
             InfoRequest.send(:require, File.expand_path(File.dirname(__FILE__) + '/customstates'))
             InfoRequest.send(:include, InfoRequestCustomStates)
@@ -231,7 +225,6 @@ describe InfoRequest do
 
 
     describe "when calculating the status for a school" do
-        fixtures :info_requests, :info_request_events, :holidays, :public_bodies, :public_body_translations
 
         before do
             @ir = info_requests(:naughty_chicken_request)
@@ -380,8 +373,8 @@ describe InfoRequest do
         
         before do 
             Time.stub!(:now).and_return(Time.utc(2007, 11, 9, 23, 59))
-            @mock_comment_event = mock_model(InfoRequestEvent, :created_at => Time.now - 23.days, :event_type => 'comment')
-            @mock_response_event = mock_model(InfoRequestEvent, :created_at => Time.now - 22.days, :event_type => 'response')
+            @mock_comment_event = safe_mock_model(InfoRequestEvent, :created_at => Time.now - 23.days, :event_type => 'comment')
+            @mock_response_event = safe_mock_model(InfoRequestEvent, :created_at => Time.now - 22.days, :event_type => 'response')
             @info_request = InfoRequest.new(:prominence => 'normal', 
                                             :awaiting_description => true, 
                                             :info_request_events => [@mock_response_event, @mock_comment_event])

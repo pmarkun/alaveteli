@@ -6,7 +6,7 @@
 #ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.14' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -37,7 +37,11 @@ require File.join(File.dirname(__FILE__), '../lib/old_rubygems_patch')
 
 Rails::Initializer.run do |config|
   # Load intial mySociety config
-  MySociety::Config.set_file(File.join(config.root_path, 'config', 'general'), true)
+  if ENV["RAILS_ENV"] == "test" 
+      MySociety::Config.set_file(File.join(config.root_path, 'config', 'test'), true)
+  else
+      MySociety::Config.set_file(File.join(config.root_path, 'config', 'general'), true)
+  end
   MySociety::Config.load_default
 
   # Settings in config/environments/* take precedence over those specified here
@@ -119,31 +123,32 @@ if (MySociety::Config.get("DOMAIN", "") != "")
 end
 
 # fallback locale and available locales
-if ENV["RAILS_ENV"] == "test"
-    # The tests assume that the "en" and "es" locales are available
-    available_locales = ["en", "es"]
-    default_locale = "en"
-else
-    available_locales = MySociety::Config.get('AVAILABLE_LOCALES', 'en es').split(/ /)
-    default_locale = MySociety::Config.get('DEFAULT_LOCALE', 'en')
-end
+available_locales = MySociety::Config.get('AVAILABLE_LOCALES', '').split(/ /)
+default_locale = MySociety::Config.get('DEFAULT_LOCALE', '')
 
 FastGettext.default_available_locales = available_locales
 I18n.locale = default_locale
 I18n.available_locales = available_locales.map {|locale_name| locale_name.to_sym}
 I18n.default_locale = default_locale
 
+# Customise will_paginate URL generation
+WillPaginate::ViewHelpers.pagination_options[:renderer] = 'WillPaginateExtension::LinkRenderer'
+
 # Load monkey patches and other things from lib/
+require 'ruby19.rb'
 require 'tmail_extensions.rb'
 require 'activesupport_cache_extensions.rb'
 require 'timezone_fixes.rb'
 require 'use_spans_for_errors.rb'
 require 'make_html_4_compliant.rb'
 require 'activerecord_errors_extensions.rb'
-require 'willpaginate_hack.rb'
+require 'willpaginate_extension.rb'
 require 'sendmail_return_path.rb'
 require 'tnef.rb'
 require 'i18n_fixes.rb'
 require 'rack_quote_monkeypatch.rb'
 require 'world_foi_websites.rb'
 require 'alaveteli_external_command.rb'
+
+ExceptionNotification::Notifier.sender_address = MySociety::Config::get('EXCEPTION_NOTIFICATIONS_FROM')
+ExceptionNotification::Notifier.exception_recipients = MySociety::Config::get('EXCEPTION_NOTIFICATIONS_TO')

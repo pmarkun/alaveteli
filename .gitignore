@@ -10,11 +10,15 @@
 .DS_Store
 .autotest
 /db/test_structure.sql
-moo.txt
 *#*#
 TAGS
 /vendor/plugins/*theme
 /locale/model_attributes.rb
 /files/
+<<<<<<< HEAD
 public/download
 script/update-translation
+=======
+/public/download
+/public/*theme
+>>>>>>> 308707f1512fc43c570023ee786463d37e43f1fb

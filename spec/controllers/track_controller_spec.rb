@@ -25,7 +25,7 @@ describe TrackController, "when making a new track on a request" do
         response.should redirect_to(:controller => 'user', :action => 'signin', :token => post_redirect.token)
     end
 
-    it "should save the track and redirect if you are logged in " do
+    it "should save the track and redirect if you are logged in" do
         session[:user_id] = @user.id
         @track_thing.should_receive(:save!)
         get :track_request, :url_title => @ir.url_title, :feed => 'track'
@@ -36,17 +36,18 @@ end
 
 describe TrackController, "when sending alerts for a track" do
     integrate_views
-    fixtures :comments, :info_requests, :outgoing_messages, :incoming_messages, :raw_emails, :info_request_events, :users, :track_things, :track_things_sent_emails, :public_bodies, :public_body_translations
     include LinkToHelper # for main_url
 
     before(:each) do
-        load_raw_emails_data(raw_emails)
+        load_raw_emails_data
         rebuild_xapian_index
     end
     
     it "should send alerts" do
         # Don't do clever locale-insertion-unto-URL stuff
-        ActionController::Routing::Routes.filters.clear
+        old_filters = ActionController::Routing::Routes.filters
+        ActionController::Routing::Routes.filters = RoutingFilter::Chain.new
+
         # set the time the comment event happened at to within the last week
         ire = info_request_events(:silly_comment_event)
         ire.created_at = Time.now - 3.days
@@ -58,7 +59,7 @@ describe TrackController, "when sending alerts for a track" do
         deliveries.size.should == 1
         mail = deliveries[0]
         mail.body.should =~ /Alter your subscription/
-        mail.to_addrs.to_s.should include(users(:silly_name_user).email)
+        mail.to_addrs.first.to_s.should include(users(:silly_name_user).email)
         mail.body =~ /(http:\/\/.*\/c\/(.*))/
         mail_url = $1
         mail_token = $2
@@ -91,6 +92,9 @@ describe TrackController, "when sending alerts for a track" do
         TrackMailer.alert_tracks
         deliveries = ActionMailer::Base.deliveries
         deliveries.size.should == 0
+
+        # Restore the routing filters
+        ActionController::Routing::Routes.filters = old_filters
     end
 
     it "should send localised alerts" do
@@ -110,10 +114,9 @@ end
 
 describe TrackController, "when viewing RSS feed for a track" do
     integrate_views
-    fixtures :info_requests, :outgoing_messages, :incoming_messages, :raw_emails, :info_request_events, :users, :track_things, :comments, :public_bodies, :public_body_translations
 
     before(:each) do
-        load_raw_emails_data(raw_emails)
+        load_raw_emails_data
         rebuild_xapian_index
     end
 
@@ -131,15 +134,19 @@ describe TrackController, "when viewing RSS feed for a track" do
         assigns[:xapian_object].results[2][:model].should == info_request_events(:useless_outgoing_message_event) # created_at 2007-10-14 10:41:12.686264
     end
 
+    it "should return NotFound for a non-existent user" do
+        lambda {
+            get :track_user, :feed => 'feed', :url_name => "there_is_no_such_user"
+        }.should raise_error(ActiveRecord::RecordNotFound)
+    end
 end
 
 describe TrackController, "when viewing JSON version of a track feed" do
 
     integrate_views
-    fixtures :info_requests, :outgoing_messages, :incoming_messages, :raw_emails, :info_request_events, :users, :track_things, :comments, :public_bodies, :public_body_translations
 
     before(:each) do
-        load_raw_emails_data(raw_emails)
+        load_raw_emails_data
         rebuild_xapian_index
     end
 
