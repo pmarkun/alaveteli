@@ -154,7 +154,7 @@ class PublicBodyController < ApplicationController
             title << [
                     'Name', 
                     'Short name',
-                    # deliberately not including 'Request email'
+                    'Request email',
                     'URL name', 
                     'Tags',
                     'Home page',
@@ -169,9 +169,6 @@ class PublicBodyController < ApplicationController
         	            public_body.name, 
                 	    public_body.short_name, 
 	                    public_body.request_email,
-        	            # Including the request_email sincewe think it's important for everybody to have this info
-                	    # DO NOT include request_email (we don't want to make it
-	                    # easy to spam all authorities with requests)
         	            public_body.url_name, 
                 	    public_body.tag_string,
 	                    public_body.calculated_home_page,
